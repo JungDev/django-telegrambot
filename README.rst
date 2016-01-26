@@ -21,20 +21,21 @@ Quickstart
 Install django-telegrambot::
 
     pip install django-telegrambot
+    
+Configure your installation
+---------------------------
 
-Add "django_telegram_bot" to your INSTALLED_APPS setting 
-   like this:
-    ```python
+Add ``django_telegrambot`` in ``INSTALLED_APPS`` ::
+
        #settings.py
        INSTALLED_APPS = (
            ...
-           'django_telegram_bot'
+           'django_telegrambot',
            ...
        )
-    ```
-Configure your installation ::
 
-    ```python
+And set your bots::
+
         #settings.py
         #Django Telegram Bot settings
         TELEGRAM_BOT_TOKENS = ('BOT_1_token','BOT_2_token',)
@@ -42,9 +43,9 @@ Configure your installation ::
         TELEGRAM_WEBHOOK_BASE = '/baseurl'
         #TELEGRAM_BOT_CERTIFICATE = 'cert.pem' #If your site use self-signed certificate, must be set with location of your public key certificate. (More info at https://core.telegram.org/bots/self-signed ) 
 
-    ```
-Include in your urls.py the ```'django_telegrambot.urls'``` using the same value of ```TELEGRAM_WEBHOOK_BASE``` :
-    ```python
+
+Include in your urls.py the ``django_telegrambot.urls`` using the same value of ``TELEGRAM_WEBHOOK_BASE`` ::
+
         #urls.py
         urlpatterns = [
             ...
@@ -52,10 +53,8 @@ Include in your urls.py the ```'django_telegrambot.urls'``` using the same value
             ...
         ]
 
-    ```
-Then use it in a project creating a module ```telegrambot.py``` in your app like this:
+Then use it in a project creating a module ``telegrambot.py`` in your app ::
 
-    ```python
         #myapp/telegrambot.py
         from django_telegrambot.apps import DjangoTelegramBot 
 
@@ -95,7 +94,6 @@ Then use it in a project creating a module ```telegrambot.py``` in your app like
             # log all errors
             dp.addErrorHandler(error)
 
-    ```
 
 Features
 --------
