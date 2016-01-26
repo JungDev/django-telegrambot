@@ -49,7 +49,7 @@ Include in your urls.py the ``django_telegrambot.urls`` using the same value of 
         #urls.py
         urlpatterns = [
             ...
-            url(r'^baseurl/', include('django_telegram_bot.urls')),
+            url(r'^baseurl/', include('django_telegrambot.urls')),
             ...
         ]
 
