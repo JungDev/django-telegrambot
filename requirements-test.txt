@@ -5,3 +5,4 @@ flake8>=2.1.0
 tox>=1.7.0
 
 # Additional test requirements go here
+python-telegram-bot>=3.2.0
