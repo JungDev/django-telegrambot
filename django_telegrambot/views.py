@@ -1,7 +1,7 @@
 # coding=utf-8
 from django.shortcuts import render
 from django.http import JsonResponse
-from apps import DjangoTelegramBot
+from django_telegrambot.apps import DjangoTelegramBot
 from django.views.decorators.csrf import csrf_exempt
 import json
 import telegram
