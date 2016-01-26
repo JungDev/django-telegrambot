@@ -1,5 +1,4 @@
-# coding=utf-8
-'''
+# -*- coding: utf-8 -*-
 # Example code for telegrambot.py module
 from django_telegrambot.apps import DjangoTelegramBot
 
@@ -41,4 +40,3 @@ def main():
     # log all errors
     dp.addErrorHandler(error)
 
-'''
