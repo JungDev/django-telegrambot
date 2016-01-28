@@ -9,17 +9,16 @@ import telegram
 import logging
 
 # Get an instance of a logger
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 # Create your views here.
 
 @csrf_exempt
 def webhook (request, bot_token):
-    try:
-        #verifico la validità del token
-        DjangoTelegramBot.bot_tokens.index(bot_token)
-    except ValueError:
+    
+    #verifico la validità del token
+    if DjangoTelegramBot.getBot(bot_token, safe=False) is None:
         return JsonResponse({})
     
     try:
@@ -31,7 +30,7 @@ def webhook (request, bot_token):
 
     update = telegram.Update.de_json(data)
     
-    dispatcher = DjangoTelegramBot.getDispatcher(bot_token)
+    dispatcher = DjangoTelegramBot.getDispatcher(bot_token, safe=False)
     dispatcher.processUpdate(update)
     
     return JsonResponse({})

@@ -14,20 +14,37 @@ class DjangoTelegramBot(AppConfig):
     bot_tokens = []
     bot_usernames = []
     dispatchers = []
+    bots = []
     
     @classmethod
-    def getDispatcher(cls, id = None):
+    def getDispatcher(cls, id = None, safe=True):
         if id == None:
             return dispatchers[0]
         else:
             try:
                 index = cls.bot_tokens.index(id)
             except ValueError:
+                if not safe : return None
                 try:
                     index = cls.bot_usernames.index(id)
                 except ValueError:
                     return None
             return cls.dispatchers[index]
+            
+    @classmethod
+    def getBot(cls, id = None, safe = True):
+        if id == None:
+            return bots[0]
+        else:
+            try:
+                index = cls.bot_tokens.index(id)
+            except ValueError:
+                if not safe : return None
+                try:
+                    index = cls.bot_usernames.index(id)
+                except ValueError:
+                    return None
+            return cls.bots[index]
         
     
     def ready(self):
@@ -40,28 +57,25 @@ class DjangoTelegramBot(AppConfig):
         if not hasattr(settings, 'TELEGRAM_WEBHOOK_SITE'): return
         webhook_site = settings.TELEGRAM_WEBHOOK_SITE
         
-        
         if not hasattr(settings, 'TELEGRAM_WEBHOOK_BASE'): return
         webhook_base = settings.TELEGRAM_WEBHOOK_BASE
-        #print(token)
         
-        '''
-        if hasattr(settings, 'TELEGRAM_BOT_CUSTOM_WEBHOOK'):
-            hookurl = settings.TELEGRAM_BOT_CUSTOM_WEBHOOK
-        '''
-        
-        certificate = None
-        if hasattr(settings, 'TELEGRAM_BOT_CERTIFICATE'):
-            certificate = settings.TELEGRAM_BOT_CERTIFICATE
+        if hasattr(settings, 'TELEGRAM_WEBHOOK_CERTIFICATE'):
+            CERT = settings.TELEGRAM_WEBHOOK_CERTIFICATE
         
         for index, token in enumerate(tokens):
             
             bot = telegram.Bot(token=token)
             hookurl = '%s%s/%s/' % (webhook_site,webhook_base, token)
-            setted = bot.setWebhook(hookurl, certificate=certificate)
+            if hasattr(settings, 'TELEGRAM_WEBHOOK_CERTIFICATE'):
+                setted = bot.setWebhook(hookurl, certificate=open(CERT,'rb'))
+            else:
+                setted = bot.setWebhook(hookurl, certificate=None)
+                
             print 'Telegram Bot <%s> setting webhook [ %s ] : %s'%(bot.username,hookurl,setted)
             
             DjangoTelegramBot.dispatchers.append(telegram.Dispatcher(bot, None))
+            DjangoTelegramBot.bots.append(bot)
             DjangoTelegramBot.bot_tokens.append(bot.token)
             DjangoTelegramBot.bot_usernames.append(bot.username)
             
