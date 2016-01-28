@@ -72,7 +72,7 @@ class DjangoTelegramBot(AppConfig):
             else:
                 setted = bot.setWebhook(hookurl, certificate=None)
                 
-            print 'Telegram Bot <{}> setting webhook [ {} ] : {}'.format(bot.username,hookurl,setted)
+            print ('Telegram Bot <{}> setting webhook [ {} ] : {}'.format(bot.username,hookurl,setted))
             
             DjangoTelegramBot.dispatchers.append(telegram.Dispatcher(bot, None))
             DjangoTelegramBot.bots.append(bot)
@@ -89,10 +89,10 @@ class DjangoTelegramBot(AppConfig):
                 #m = __import__(module_name).telegrambot
                 m = importlib.import_module(module_name)
                 if execute and hasattr(m, method_name):
-                    print 'Run {}.main()'.format(module_name)
+                    print ('Run {}.main()'.format(module_name))
                     getattr(m,method_name)()
                 else:
-                    print 'Run {}'.format(module_name)
+                    print ('Run {}'.format(module_name))
                         
             except ImportError:
                 return False
@@ -103,7 +103,7 @@ class DjangoTelegramBot(AppConfig):
         for app in settings.INSTALLED_APPS:
             module_name = '{}.telegrambot'.format( app )
             if module_exists(module_name, 'main', True):
-                print 'Loaded {}'.format( module_name)
+                print ('Loaded {}'.format( module_name))
                 
             
         #import telegrambot
