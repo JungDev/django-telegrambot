@@ -1,7 +1,7 @@
 
 from django.conf.urls import url, include, patterns
-from views import webhook
+from . import views
 
 urlpatterns = [
-    url(r'(?P<bot_token>.+?)/$', webhook, name='webhook'),
+    url(r'(?P<bot_token>.+?)/$', views.webhook, name='webhook'),
 ]

@@ -3,7 +3,7 @@
 from django_telegrambot.apps import DjangoTelegramBot
 
 import logging
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 #in questa parte del file definire il funzionamento del bot aggiungendo gli handler
@@ -22,7 +22,7 @@ def error(bot, update, error):
     
 
 def main():
-    print "Handlers for telegram bot"
+    logger.info("Loading handlers for telegram bot")
     
     # Default dispatcher (this is related to the first bot in settings.TELEGRAM_BOT_TOKENS)
     dp = DjangoTelegramBot.dispatcher
