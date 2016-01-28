@@ -66,13 +66,13 @@ class DjangoTelegramBot(AppConfig):
         for index, token in enumerate(tokens):
             
             bot = telegram.Bot(token=token)
-            hookurl = '%s%s/%s/' % (webhook_site,webhook_base, token)
+            hookurl = '{}{}/{}/'.format(webhook_site,webhook_base, token)
             if hasattr(settings, 'TELEGRAM_WEBHOOK_CERTIFICATE'):
                 setted = bot.setWebhook(hookurl, certificate=open(CERT,'rb'))
             else:
                 setted = bot.setWebhook(hookurl, certificate=None)
                 
-            print 'Telegram Bot <%s> setting webhook [ %s ] : %s'%(bot.username,hookurl,setted)
+            print 'Telegram Bot <{}> setting webhook [ {} ] : {}'.format(bot.username,hookurl,setted)
             
             DjangoTelegramBot.dispatchers.append(telegram.Dispatcher(bot, None))
             DjangoTelegramBot.bots.append(bot)
@@ -89,10 +89,10 @@ class DjangoTelegramBot(AppConfig):
                 #m = __import__(module_name).telegrambot
                 m = importlib.import_module(module_name)
                 if execute and hasattr(m, method_name):
-                    print 'Run %s.main()' % module_name
+                    print 'Run {}.main()'.format(module_name)
                     getattr(m,method_name)()
                 else:
-                    print 'Run %s' % module_name
+                    print 'Run {}'.format(module_name)
                         
             except ImportError:
                 return False
@@ -101,9 +101,9 @@ class DjangoTelegramBot(AppConfig):
         
         # import telegram bot handlers for all INSTALLED_APPS
         for app in settings.INSTALLED_APPS:
-            module_name = '%s.telegrambot' % app
+            module_name = '{}.telegrambot'.format( app )
             if module_exists(module_name, 'main', True):
-                print 'Loaded %s' % module_name
+                print 'Loaded {}'.format( module_name)
                 
             
         #import telegrambot
