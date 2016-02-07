@@ -26,11 +26,24 @@ def webhook (request, bot_token):
         logger.info(data)
     except:
         logger.info('Telegram bot receive invalid request' )
-        return JsonResponse({'Error':'Invalid Request'})
+        return JsonResponse({})
 
-    update = telegram.Update.de_json(data)
-    
     dispatcher = DjangoTelegramBot.getDispatcher(bot_token, safe=False)
-    dispatcher.processUpdate(update)
+    if dispatcher is None:
+        return JsonResponse({})
+        
+    try:
+        update = telegram.Update.de_json(data)
+        dispatcher.processUpdate(update)
+        logger.debug('Processed Update: {} with context {}'.format(update, context))
+    # Dispatch any errors
+    except TelegramError as te:
+        logger.warn("Error was raised while processing Update.")
+        dispatcher.dispatchError(update, te)
+
+    # All other errors should not stop the thread, just print them
+    except:
+        logger.error("An uncaught error was raised while processing an update")
     
-    return JsonResponse({})
+    finally:
+        return JsonResponse({})
