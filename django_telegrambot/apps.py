@@ -56,17 +56,17 @@ class DjangoTelegramBot(AppConfig):
         DjangoTelegramBot.ready_run = True
         
         if not hasattr(settings, 'TELEGRAM_BOT_TOKENS'): 
-            logger.debug('Required TELEGRAM_BOT_TOKENS missing in settings')
+            logger.warn('Required TELEGRAM_BOT_TOKENS missing in settings')
             return
         tokens = settings.TELEGRAM_BOT_TOKENS
         
         if not hasattr(settings, 'TELEGRAM_WEBHOOK_SITE'): 
-            logger.debug('Required TELEGRAM_WEBHOOK_SITE missing in settings')
+            logger.warn('Required TELEGRAM_WEBHOOK_SITE missing in settings')
             return
         webhook_site = settings.TELEGRAM_WEBHOOK_SITE
         
         if not hasattr(settings, 'TELEGRAM_WEBHOOK_BASE'): 
-            logger.debug('Required TELEGRAM_WEBHOOK_BASE missing in settings')
+            logger.warn('Required TELEGRAM_WEBHOOK_BASE missing in settings')
             return
         webhook_base = settings.TELEGRAM_WEBHOOK_BASE
         
@@ -75,7 +75,7 @@ class DjangoTelegramBot(AppConfig):
             CERT = settings.TELEGRAM_WEBHOOK_CERTIFICATE
             if(os.path.exists(CERT)):
                 use_certificate = True
-                logger.debug('TELEGRAM_WEBHOOK_CERTIFICATE found in {}'.format(CERT))
+                logger.info('TELEGRAM_WEBHOOK_CERTIFICATE found in {}'.format(CERT))
             else:
                 logger.error('TELEGRAM_WEBHOOK_CERTIFICATE not found in {} '.format(CERT))
         
@@ -89,7 +89,7 @@ class DjangoTelegramBot(AppConfig):
             else:
                 setted = bot.setWebhook(hookurl, certificate=None)
                 
-            logger.debug('Telegram Bot <{}> setting webhook [ {} ] : {}'.format(bot.username,hookurl,setted))
+            logger.info('Telegram Bot <{}> setting webhook [ {} ] : {}'.format(bot.username,hookurl,setted))
             
             DjangoTelegramBot.dispatchers.append(telegram.Dispatcher(bot, None))
             DjangoTelegramBot.bots.append(bot)
@@ -122,5 +122,5 @@ class DjangoTelegramBot(AppConfig):
         for app in settings.INSTALLED_APPS:
             module_name = '{}.telegrambot'.format( app )
             if module_exists(module_name, 'main', True):
-                logger.debug('Loaded {}'.format(module_name))
+                logger.info('Loaded {}'.format(module_name))
                 
