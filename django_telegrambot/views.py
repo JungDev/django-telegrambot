@@ -23,7 +23,7 @@ def webhook (request, bot_token):
     
     try:
         data = json.loads(request.body.decode("utf-8"))
-        logger.info(data)
+        logger.debug(data)
     except:
         logger.info('Telegram bot receive invalid request' )
         return JsonResponse({})
@@ -35,7 +35,7 @@ def webhook (request, bot_token):
     try:
         update = telegram.Update.de_json(data)
         dispatcher.processUpdate(update)
-        logger.debug('Processed Update: {} with context {}'.format(update, context))
+        logger.debug('Processed Update: {}'.format(update))
     # Dispatch any errors
     except TelegramError as te:
         logger.warn("Error was raised while processing Update.")
