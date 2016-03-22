@@ -91,7 +91,7 @@ class DjangoTelegramBot(AppConfig):
                 
             logger.info('Telegram Bot <{}> setting webhook [ {} ] : {}'.format(bot.username,hookurl,setted))
             
-            DjangoTelegramBot.dispatchers.append(telegram.Dispatcher(bot, None))
+            DjangoTelegramBot.dispatchers.append(telegram.ext.Dispatcher(bot, None))
             DjangoTelegramBot.bots.append(bot)
             DjangoTelegramBot.bot_tokens.append(bot.token)
             DjangoTelegramBot.bot_usernames.append(bot.username)
