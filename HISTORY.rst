@@ -2,7 +2,7 @@
 
 History
 -------
-0.1.9 (2016-04-27)
+0.2.0 (2016-04-27)
 ++++++++++++++++++
 
 * Update for python-telegram-bot release v4.0.1
