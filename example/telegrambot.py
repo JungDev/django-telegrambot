@@ -6,16 +6,19 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-#in questa parte del file definire il funzionamento del bot aggiungendo gli handler
+# Define a few command handlers. These usually take the two arguments bot and
+# update. Error handlers also receive the raised TelegramError object in error.
 def start(bot, update):
     bot.sendMessage(update.message.chat_id, text='Hi!')
+
 
 def help(bot, update):
     bot.sendMessage(update.message.chat_id, text='Help!')
 
+
 def echo(bot, update):
-    logger.info('ECHO: %s'%update.message.text)
     bot.sendMessage(update.message.chat_id, text=update.message.text)
+
 
 def error(bot, update, error):
     logger.warn('Update "%s" caused error "%s"' % (update, error))
@@ -31,11 +34,11 @@ def main():
     # dp = DjangoTelegramBot.getDispatcher('BOT_n_username')  #get by bot username
     
     # on different commands - answer in Telegram
-    dp.addTelegramCommandHandler("start", start)
-    dp.addTelegramCommandHandler("help", help)
+    dp.addHandler(CommandHandler("start", start))
+    dp.addHandler(CommandHandler("help", help))
 
     # on noncommand i.e message - echo the message on Telegram
-    dp.addTelegramMessageHandler(echo)
+    dp.addHandler(MessageHandler([Filters.text], echo))
 
     # log all errors
     dp.addErrorHandler(error)

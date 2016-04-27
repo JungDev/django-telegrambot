@@ -58,38 +58,39 @@ Then use it in a project creating a module ``telegrambot.py`` in your app ::
         #myapp/telegrambot.py
         from django_telegrambot.apps import DjangoTelegramBot 
 
+        # Define a few command handlers. These usually take the two arguments bot and
+        # update. Error handlers also receive the raised TelegramError object in error.
         def start(bot, update):
             bot.sendMessage(update.message.chat_id, text='Hi!')
+        
         
         def help(bot, update):
             bot.sendMessage(update.message.chat_id, text='Help!')
         
+        
         def echo(bot, update):
             bot.sendMessage(update.message.chat_id, text=update.message.text)
+        
         
         def error(bot, update, error):
             logger.warn('Update "%s" caused error "%s"' % (update, error))
             
         
         def main():
-            print "Handlers for telegram bot"
+            logger.info("Loading handlers for telegram bot")
             
-            #Utilizzare questa variabile per ottenere il dispatcher relativo al default bot
+            # Default dispatcher (this is related to the first bot in settings.TELEGRAM_BOT_TOKENS)
             dp = DjangoTelegramBot.dispatcher
-            
-            # in alternativa si può selezionare quale bot usare utilizzando la seguente funzione:
-            '''
-            dp = DjangoTelegramBot.getDispatcher('BOT_2_token')     #by bot
-            dp = DjangoTelegramBot.getDispatcher('BOT_2_username')  #by bot username
-
-            '''
+            # To get Dispatcher related to a specific bot
+            # dp = DjangoTelegramBot.getDispatcher('BOT_n_token')     #get by bot token
+            # dp = DjangoTelegramBot.getDispatcher('BOT_n_username')  #get by bot username
             
             # on different commands - answer in Telegram
-            dp.addTelegramCommandHandler("start", start)
-            dp.addTelegramCommandHandler("help", help)
+            dp.addHandler(CommandHandler("start", start))
+            dp.addHandler(CommandHandler("help", help))
         
             # on noncommand i.e message - echo the message on Telegram
-            dp.addTelegramMessageHandler(echo)
+            dp.addHandler(MessageHandler([Filters.text], echo))
         
             # log all errors
             dp.addErrorHandler(error)

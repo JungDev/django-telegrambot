@@ -2,11 +2,15 @@
 
 History
 -------
+0.1.9 (2016-04-27)
+++++++++++++++++++
+
+* Update for python-telegram-bot release v4.0.1
+
 0.1.8 (2016-03-22)
 ++++++++++++++++++
 
 * Update for deprecation in python-telegram-bot release v3.4
-
 
 0.1.5 (2016-01-28)
 ++++++++++++++++++
