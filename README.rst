@@ -56,6 +56,7 @@ Include in your urls.py the ``django_telegrambot.urls`` using the same value of 
 Then use it in a project creating a module ``telegrambot.py`` in your app ::
 
         #myapp/telegrambot.py
+        from telegram.ext import CommandHandler, MessageHandler, Filters
         from django_telegrambot.apps import DjangoTelegramBot 
 
         # Define a few command handlers. These usually take the two arguments bot and

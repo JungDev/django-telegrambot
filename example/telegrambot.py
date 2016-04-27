@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Example code for telegrambot.py module
+from telegram.ext import CommandHandler, MessageHandler, Filters
 from django_telegrambot.apps import DjangoTelegramBot
 
 import logging
