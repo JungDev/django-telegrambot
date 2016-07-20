@@ -38,7 +38,7 @@ def webhook (request, bot_token):
         
     try:
         update = telegram.Update.de_json(data)
-        dispatcher.processUpdate(update)
+        dispatcher.process_update(update)
         logger.debug('Bot <{}> : Processed update {}'.format(bot.username, update))
     # Dispatch any errors
     except TelegramError as te:

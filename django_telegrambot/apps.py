@@ -4,6 +4,7 @@ from django.apps import AppConfig
 from django.conf import settings
 import importlib
 import telegram
+from telegram.ext import Dispatcher
 import os.path
 
 import logging
@@ -83,6 +84,12 @@ class DjangoTelegramBot(AppConfig):
         for index, token in enumerate(tokens):
             
             bot = telegram.Bot(token=token)
+           
+            DjangoTelegramBot.dispatchers.append(Dispatcher(bot, None))
+            DjangoTelegramBot.bots.append(bot)
+            DjangoTelegramBot.bot_tokens.append(bot.token)
+            DjangoTelegramBot.bot_usernames.append(bot.username)
+
             hookurl = '{}{}/{}/'.format(webhook_site,webhook_base, token)
             if (use_certificate):
                 setted = bot.setWebhook(hookurl, certificate=open(CERT,'rb'))
@@ -90,11 +97,6 @@ class DjangoTelegramBot(AppConfig):
                 setted = bot.setWebhook(hookurl, certificate=None)
                 
             logger.info('Telegram Bot <{}> setting webhook [ {} ] : {}'.format(bot.username,hookurl,setted))
-            
-            DjangoTelegramBot.dispatchers.append(telegram.ext.Dispatcher(bot, None))
-            DjangoTelegramBot.bots.append(bot)
-            DjangoTelegramBot.bot_tokens.append(bot.token)
-            DjangoTelegramBot.bot_usernames.append(bot.username)
             
             #per compatibilità salvo il primo bot nella proprietà DjangoTelegramBot.dispatcher
             if index==0:
