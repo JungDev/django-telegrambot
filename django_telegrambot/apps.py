@@ -85,7 +85,7 @@ class DjangoTelegramBot(AppConfig):
             
             bot = telegram.Bot(token=token)
            
-            DjangoTelegramBot.dispatchers.append(Dispatcher(bot, None))
+            DjangoTelegramBot.dispatchers.append(Dispatcher(bot, None, workers=0))
             DjangoTelegramBot.bots.append(bot)
             DjangoTelegramBot.bot_tokens.append(bot.token)
             DjangoTelegramBot.bot_usernames.append(bot.username)
