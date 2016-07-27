@@ -2,6 +2,11 @@
 
 History
 -------
+
+0.2.2 (2016-07-27)
+++++++++++++++++++
+* Fix multi workers
+
 0.2.1 (2016-07-24)
 ++++++++++++++++++
 * Update for python-telegram-bot release v5.0
