@@ -24,7 +24,7 @@ class DjangoTelegramBot(AppConfig):
     @classmethod
     def getDispatcher(cls, id = None, safe=True):
         if id == None:
-            return dispatchers[0]
+            return cls.dispatchers[0]
         else:
             try:
                 index = cls.bot_tokens.index(id)
@@ -39,7 +39,7 @@ class DjangoTelegramBot(AppConfig):
     @classmethod
     def getBot(cls, id = None, safe = True):
         if id == None:
-            return bots[0]
+            return cls.bots[0]
         else:
             try:
                 index = cls.bot_tokens.index(id)
