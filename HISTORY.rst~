@@ -3,10 +3,6 @@
 History
 -------
 
-0.2.3 (2016-07-30)
-++++++++++++++++++
-* Fix default dispatcher and bot
-
 0.2.2 (2016-07-27)
 ++++++++++++++++++
 * Fix multi workers
