@@ -3,6 +3,10 @@
 History
 -------
 
+0.2.4 (2016-10-04)
+++++++++++++++++++
+* Fix compatibility with Django 1.10
+
 0.2.3 (2016-07-30)
 ++++++++++++++++++
 * Fix default dispatcher and bot
