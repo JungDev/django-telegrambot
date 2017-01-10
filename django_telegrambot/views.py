@@ -37,7 +37,7 @@ def webhook (request, bot_token):
         return JsonResponse({})
         
     try:
-        update = telegram.Update.de_json(data)
+        update = telegram.Update.de_json(data, bot)
         dispatcher.process_update(update)
         logger.debug('Bot <{}> : Processed update {}'.format(bot.username, update))
     # Dispatch any errors
