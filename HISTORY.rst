@@ -2,6 +2,9 @@
 
 History
 -------
+0.2.5 (2017-03-06)
+++++++++++++++++++
+* Fix compatibility with python-telegram-bot 5.1
 
 0.2.4 (2016-10-04)
 ++++++++++++++++++
