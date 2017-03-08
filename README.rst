@@ -21,7 +21,7 @@ Quickstart
 Install django-telegrambot::
 
     pip install django-telegrambot
-    
+
 Configure your installation
 ---------------------------
 
@@ -41,7 +41,7 @@ And set your bots::
         TELEGRAM_BOT_TOKENS = ('BOT_1_token','BOT_2_token',)
         TELEGRAM_WEBHOOK_SITE = 'https://mysite.it'
         TELEGRAM_WEBHOOK_BASE = '/baseurl'
-        #TELEGRAM_WEBHOOK_CERTIFICATE = 'cert.pem' #If your site use self-signed certificate, must be set with location of your public key certificate. (More info at https://core.telegram.org/bots/self-signed ) 
+        #TELEGRAM_WEBHOOK_CERTIFICATE = 'cert.pem' #If your site use self-signed certificate, must be set with location of your public key certificate. (More info at https://core.telegram.org/bots/self-signed )
 
 
 Include in your urls.py the ``django_telegrambot.urls`` using the same value of ``TELEGRAM_WEBHOOK_BASE`` ::
@@ -80,17 +80,17 @@ Then use it in a project creating a module ``telegrambot.py`` in your app ::
 
         def error(bot, update, error):
             logger.warn('Update "%s" caused error "%s"' % (update, error))
-            
+
 
         def main():
             logger.info("Loading handlers for telegram bot")
-            
+
             # Default dispatcher (this is related to the first bot in settings.TELEGRAM_BOT_TOKENS)
             dp = DjangoTelegramBot.dispatcher
             # To get Dispatcher related to a specific bot
             # dp = DjangoTelegramBot.getDispatcher('BOT_n_token')     #get by bot token
             # dp = DjangoTelegramBot.getDispatcher('BOT_n_username')  #get by bot username
-            
+
             # on different commands - answer in Telegram
             dp.add_handler(CommandHandler("start", start))
             dp.add_handler(CommandHandler("help", help))
@@ -126,6 +126,29 @@ Does the code actually work?
     source <YOURVIRTUALENV>/bin/activate
     (myenv) $ pip install -r requirements-test.txt
     (myenv) $ python runtests.py
+
+Sample Application
+------------------
+There a sample application in `sampleproject` directory. Here is installation instructions:
+
+1. Install requirements with command
+
+        pip install -r requirements.txt
+2. Copy file `local_settings.sample.py` as `local_settings.py` and edit your bot token
+
+        cp sampleproject/local_settings.sample.py sampleproject/local_settings.py
+
+        nano sampleproject/local_settings.py
+3. Run Django migrations
+
+        python manage.py migrate
+4. Run server
+
+        python manage.py runserver
+5. To test webhook locally install `ngrok` application and run command
+
+        ./ngrok http 8000
+And change TELEGRAM_WEBHOOK_SITE and ALLOWED_HOSTS in local_settings.py file
 
 Credits
 ---------
