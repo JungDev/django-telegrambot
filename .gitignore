@@ -42,3 +42,7 @@ output/*/index.html
 
 # Sphinx
 docs/_build
+env/
+.idea/
+/sampleproject/sampleproject/local_settings.py
+/sampleproject/db.sqlite3
