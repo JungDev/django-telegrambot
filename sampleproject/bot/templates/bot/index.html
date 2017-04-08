@@ -1,0 +1,23 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1><a href="https://github.com/JungDev/django-telegrambot#django-telegrambot">Django-TelegramBot</a></h1>
+<p>
+Welcome in the sample project of Django-Telegrambot, aka how add Telegram bots to your Django app!
+<br>
+The full documentation is at <a href="https://django-telegrambot.readthedocs.org">https://django-telegrambot.readthedocs.org</a>.
+</p>
+
+{% if bot_list %}
+<h3>Bot's List:</h3>
+    <ul class="nolist">
+        {% for bot in bot_list %}
+        <li><a href="https://t.me/{{ bot.username }}/">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAABNJJREFUWIXFlm2IVFUYx3/PuTO7M7OrbqlISparGxWVRYuSSbokRlmmVkKC+IIRRF+qbyVoH4wgqU9+EIQ+WClKQUGSpIGmELm+YPZC26qkrOm6677P7Mw9z9OH2dmZ2Zl9M8MDh3vvOc/9///nf57z3Au3ucnNvLTwR6sVRx3GFCc4MzoJuSDG70caJPxfBCw8ak8KbBRYhjCtXIwZvcBhET6XkK/GImZUAQuOWb3z+omILByrWABDLuD9e8caIntuTsAWcwsadCvCu4IE4yEvZpCvu7rY8MvzcmPMAh48ZxWTWnUvIitvmrigGfZHKG5p4yK5NLqALebmLdb9AqtuBXleBE0et+Bkg1wvHHdDA+sX+c1mrFKDW9nNqBPVvWyxIs4iB+Ye7H80Egl+BoneytUXNjN789SSyI6yAh47FH6PseQ/ElCFp6ZCaMmU5q4JbT3poPav56QLCrbg4YPpx73a095g/N2wMGT+hAzb7lcONVTwzhzwaiWxqkyOBX5TjjeSu1GCdaIqYGNfrRqzYp4VM4Tld0eYGs+v+HxnBm+ViJXiGbIe+LhIgFe/TMZSGM2I43l2Grw8M2Du5EpEBDOjLa3URIVAhN86PGpG+ZOuD9V+0zfz/PLE3xGAOQdsqmpm1oirV+O+hGfNPY4XZlZQHc0nc29otPQrM2KOQLKEv3Zm7R8GU5wL5gNZARZm5nhXLFUAwwhUeWaqsbY2Qv3UGCL5MG9GS8roDo3ZVY5Kl51LZpSmHnCJEZYkMgcGtkBNJqNaEjM96tm/uIK7qkqzuTNjXEopEYG6KkfU5YWda+3HR6KYDu+o4SbDwCkIzbty2X25V/ngp3YOne8mk/WTUI2LSaU5qVS6UnKAM20hKm7EkxOayqADoekNZ0GRPhCQgH1XAvZc7KHG2ln3QIIXH7mT0KAmItwbF5yUJtmZdkUR0CF4RQzWMehAWuLN3ox8B2+KF3CJBNFJk+iuvoOdTZ5kqKgZ0yvLkwOcbvcDNaAQz/CWfdebESLNgwLaVkiL99aiamQ7qEr2aoJKANEK+mPVnP0nRXcGDreGtKVL86Yz5WnqddlvgFKAZ6gKXgfGU9Y4KABAzb7zCtlu+SqWu1cwF3C8JU2oRke/surLy+w63Y4VFJtTV1NoJJrFMSvAI++K6vnrr8b+LBIQiuz2Q79iOuQZOHJFae8L+ejoNU6nErx1Is3Gb6/Qk/YANLZmE1BtwM0izKwbocnuHG/RJk7YmzwhWH3Zjc0lTyYDXR1YohoXi4EZPpmkLkiyed5Etp1N02zVI/1r9Xr1s3vXTLhaIqBqT3KxmP4A5bJrIJPNMO+RIMiHmaHpfqw/hYsnkGiUXCkrVaJbe9ZUv1/WAYDEF307MN4oLiFDgcoBD/jspEzsINWZZDQ+n9WSzs2W/BH1tcbf9qrH1Yx8h5GfB8ZEhokFNbumyEuF5GUdAODTGzXRSMUB4InSybG4MWTcuIrq0sz6CWeHRg2fKvssHqT6dgq2drTQkZphjd4Hr7AhfrHc/Oiou3tXOrXtQO04mbtwfKjJqu28Lpnhwsa2rJ0WJd6zGpWNgj0FEsmxDNkOAzlnxmeE4S5eq2kfDXr8vu6+PpFMZT3O1WE2BXBgnZi7gHKSTVUt48a8ne1frXIrn7AjhjAAAAAASUVORK5CYII=">
+             {{ bot.first_name}} <small>(@{{ bot.username}})</small></a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+<p>No bots are available. Please <a href="https://github.com/JungDev/django-telegrambot#configure-your-installation">configure it</a> in settings.py</p>
+{% endif %}
+{% endblock %}

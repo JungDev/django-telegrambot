@@ -2,6 +2,11 @@
 
 History
 -------
+0.2.6 (2017-04-08)
+++++++++++++++++++
+* Improve module loading
+* Added sample project
+
 0.2.5 (2017-03-06)
 ++++++++++++++++++
 * Fix compatibility with python-telegram-bot 5.1
