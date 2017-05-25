@@ -29,8 +29,6 @@ class DjangoTelegramBot(AppConfig):
     name = 'django_telegrambot'
     verbose_name = 'Django TelegramBot'
     ready_run = False
-    #_dispatcher = None
-    #_updater = None
     bot_tokens = []
     bot_usernames = []
     dispatchers = []
@@ -127,57 +125,55 @@ class DjangoTelegramBot(AppConfig):
         DjangoTelegramBot.ready_run = True
 
         self.mode = WEBHOOK_MODE
-        if hasattr(settings, 'TELEGRAM_BOT_MODE'):
-            if settings.TELEGRAM_BOT_MODE == 'POLLING':
-                self.mode = POLLING_MODE
+        if settings.DJANGO_TELEGRAMBOT.get('MODE', 'WEBHOOK') == 'POLLING':
+            self.mode = POLLING_MODE
+
         modes = ['WEBHOOK','POLLING']
         logger.info('Django Telegram Bot <{} mode>'.format(modes[self.mode]))
 
-        if not hasattr(settings, 'TELEGRAM_BOT_TOKENS'):
-            logger.warn('Required TELEGRAM_BOT_TOKENS missing in settings')
-            return
-        tokens = settings.TELEGRAM_BOT_TOKENS
+        bots_list = settings.DJANGO_TELEGRAMBOT.get('BOTS', [])
 
         if self.mode == WEBHOOK_MODE:
-            if not hasattr(settings, 'TELEGRAM_WEBHOOK_SITE'):
+            webhook_site = settings.DJANGO_TELEGRAMBOT.get('WEBHOOK_SITE', None)
+            if not webhook_site:
                 logger.warn('Required TELEGRAM_WEBHOOK_SITE missing in settings')
                 return
-            webhook_site = settings.TELEGRAM_WEBHOOK_SITE
+            if webhook_site.endswith("/"):
+                webhook_site = webhook_site[:-1]
 
-            webhook_base = ""
-            if hasattr(settings, 'TELEGRAM_WEBHOOK_BASE'):
-                logger.warn('Required TELEGRAM_WEBHOOK_BASE missing in settings')
-                webhook_base = settings.TELEGRAM_WEBHOOK_BASE
+            webhook_base = settings.DJANGO_TELEGRAMBOT.get('WEBHOOK_PREFIX','/')
+            if webhook_base.startswith("/"):
+                webhook_base = webhook_base[1:]
+            if webhook_base.endswith("/"):
+                webhook_base = webhook_base[:-1]
 
+            cert = settings.DJANGO_TELEGRAMBOT.get('WEBHOOK_CERTIFICATE', None)
             certificate = None
-            if hasattr(settings, 'TELEGRAM_WEBHOOK_CERTIFICATE'):
-                cert = settings.TELEGRAM_WEBHOOK_CERTIFICATE
-                if os.path.exists(cert):
-                    logger.info('TELEGRAM_WEBHOOK_CERTIFICATE found in {}'.format(cert))
-                    certificate=open(cert, 'rb')
-                else:
-                    logger.error('TELEGRAM_WEBHOOK_CERTIFICATE not found in {} '.format(cert))
+            if cert and os.path.exists(cert):
+                logger.info('WEBHOOK_CERTIFICATE found in {}'.format(cert))
+                certificate=open(cert, 'rb')
+            elif cert:
+                logger.error('WEBHOOK_CERTIFICATE not found in {} '.format(cert))
 
-            timeout = None
-            if hasattr(settings, 'TELEGRAM_WEBHOOK_TIMEOUT'):
-                timeout = settings.TELEGRAM_WEBHOOK_TIMEOUT
+        for b in bots_list:
+            token = b.get('TOKEN', None)
+            if not token:
+                break
 
-            max_connections = 40
-            if hasattr(settings, 'TELEGRAM_WEBHOOK_MAX_CONNECTIONS'):
-                max_connections = settings.TELEGRAM_WEBHOOK_MAX_CONNECTIONS
+            allowed_updates = b.get('ALLOWED_UPDATES', None)
+            timeout = b.get('TIMEOUT', None)
 
-            allowed_updates = None
-            if hasattr(settings, 'TELEGRAM_WEBHOOK_ALLOWED_UPDATES'):
-                allowed_updates = settings.TELEGRAM_WEBHOOK_ALLOWED_UPDATES
-
-        for token in tokens:
             if self.mode == WEBHOOK_MODE:
                 bot = telegram.Bot(token=token)
                 DjangoTelegramBot.dispatchers.append(Dispatcher(bot, None, workers=0))
-                hookurl = '{}{}/{}/'.format(webhook_site, webhook_base, token)
+                hookurl = '{}/{}/{}/'.format(webhook_site, webhook_base, token)
+
+                max_connections = b.get('WEBHOOK_MAX_CONNECTIONS', 40)
+
                 setted = bot.setWebhook(hookurl, certificate=certificate, timeout=timeout, max_connections=max_connections, allowed_updates=allowed_updates)
                 webhook_info = bot.getWebhookInfo()
                 real_allowed = webhook_info.allowed_updates if webhook_info.allowed_updates else ["ALL"]
+
                 bot.more_info = webhook_info
                 logger.info('Telegram Bot <{}> setting webhook [ {} ] max connections:{} allowed updates:{} pending updates:{} : {}'.format(bot.username, webhook_info.url, webhook_info.max_connections, real_allowed, webhook_info.pending_update_count, setted))
             else:
@@ -223,7 +219,4 @@ class DjangoTelegramBot(AppConfig):
             for token in DjangoTelegramBot.__used_tokens:
                 updater = DjangoTelegramBot.get_updater(bot_id=token)
                 logger.info('python manage.py botpolling --username={}'.format(updater.bot.username))
-
-
-
 

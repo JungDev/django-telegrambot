@@ -2,9 +2,18 @@
 
 History
 -------
+1.0.0 (2017-05-25)
+++++++++++++++++++
+* IMPORTANT: If you upgrade from a previous version, you MUST change how to include django_telegrambot.urls and settings.py.
+* Added admin dashboard, available at /admin/django-telegrambot
+* Added polling mode from management command (an easy to way to run bot in local machine, not recommended in production)
+* More setting available
+* Improved AppConfig
+* Improved sample project
+
 0.2.6 (2017-04-08)
 ++++++++++++++++++
-* Improve module loading
+* Improved module loading
 * Added sample project
 
 0.2.5 (2017-03-06)

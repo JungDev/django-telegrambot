@@ -18,6 +18,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^baseurl/', include('django_telegrambot.urls')),
+    url(r'^', include('django_telegrambot.urls')),
     url(r'^$', include('bot.urls')),
 ]

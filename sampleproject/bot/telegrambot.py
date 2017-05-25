@@ -13,6 +13,22 @@ def start(bot, update):
     bot.sendMessage(update.message.chat_id, text='Hi!')
 
 
+def startgroup(bot, update):
+    bot.sendMessage(update.message.chat_id, text='Hi!')
+
+
+def me(bot, update):
+    bot.sendMessage(update.message.chat_id, text='Your information:\n{}'.format(update.effective_user))
+
+
+def chat(bot, update):
+    bot.sendMessage(update.message.chat_id, text='This chat information:\n {}'.format(update.effective_chat))
+
+
+def forwarded(bot, update):
+    bot.sendMessage(update.message.chat_id, text='This msg forwaded information:\n {}'.format(update.effective_message))
+
+
 def help(bot, update):
     bot.sendMessage(update.message.chat_id, text='Help!')
 
@@ -37,6 +53,11 @@ def main():
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
+
+    dp.add_handler(CommandHandler("startgroup", startgroup))
+    dp.add_handler(CommandHandler("me", me))
+    dp.add_handler(CommandHandler("chat", chat))
+    dp.add_handler(MessageHandler(Filters.forwarded , forwarded))
 
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, echo))

@@ -29,8 +29,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         from django.conf import settings
-        if not settings.TELEGRAM_BOT_MODE == 'POLLING':
-            self.stderr.write("Webhook mode active, change it in your settings if you want use polling update")
+        if settings.DJANGO_TELEGRAMBOT.get('MODE', 'WEBHOOK') == 'WEBHOOK':
+            self.stderr.write("Webhook mode active in settings.py, change in POLLING if you want use polling update")
             return
 
         updater = self.get_updater(username=options.get('username'), token=options.get('token'))
@@ -48,10 +48,30 @@ class Command(BaseCommand):
         console.setFormatter(logging.Formatter('%(name)s - %(levelname)s - %(message)s'))
         logger.addHandler(console)
 
-        #wbinfo = updater.bot.getWebhookInfo()
-        #logger.warn(wbinfo)
-        #updater.bot.deleteWebhook() #not yet present in python-telegram-bot 5.3.1
+
+        bots_list = settings.DJANGO_TELEGRAMBOT.get('BOTS', [])
+        b = None
+        for bot_set in bots_list:
+            if bot_set.get('TOKEN', None) == updater.bot.token:
+                b = bot_set
+                break
+        if not b:
+            self.stderr.write("Cannot find bot settings")
+            return
+
+        allowed_updates = b.get('ALLOWED_UPDATES', None)
+        timeout = b.get('TIMEOUT', 10)
+        poll_interval = b.get('POLL_INTERVAL', 0.0)
+        clean = b.get('POLL_CLEAN', False)
+        bootstrap_retries = b.get('POLL_BOOTSTRAP_RETRIES', 0)
+        read_latency = b.get('POLL_READ_LATENCY', 2.)
+
         self.stdout.write("Run polling...")
-        updater.start_polling()
+        updater.start_polling(poll_interval=poll_interval,
+                      timeout=timeout,
+                      clean=clean,
+                      bootstrap_retries=bootstrap_retries,
+                      read_latency=read_latency,
+                      allowed_updates=allowed_updates)
         self.stdout.write("the bot is started and runs until we press Ctrl-C on the command line.")
         updater.idle()
