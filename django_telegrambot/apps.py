@@ -167,7 +167,7 @@ class DjangoTelegramBot(AppConfig):
             if self.mode == WEBHOOK_MODE:
                 try:
                     bot = telegram.Bot(token=token)
-                except InvalidToken
+                except InvalidToken:
                     logger.error('Invalid Token : {}'.format(token))
                     return 
                 DjangoTelegramBot.dispatchers.append(Dispatcher(bot, None, workers=0))
@@ -189,7 +189,7 @@ class DjangoTelegramBot(AppConfig):
                     DjangoTelegramBot.updaters.append(updater)
                     DjangoTelegramBot.dispatchers.append(updater.dispatcher)
                     DjangoTelegramBot.__used_tokens.add(token)
-                except InvalidToken
+                except InvalidToken:
                     logger.error('Invalid Token : {}'.format(token))
                     return
 
