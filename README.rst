@@ -47,14 +47,14 @@ And set your bots::
                                 # a management command that starts a worker
 
             'WEBHOOK_SITE' : 'https://mywebsite.com',
-        	'WEBHOOK_PREFIX' : '/prefix', # (Optional[str]) # If this value is specified,
+            'WEBHOOK_PREFIX' : '/prefix', # (Optional[str]) # If this value is specified,
                                           # a prefix is added to webhook url
 
-        	#'WEBHOOK_CERTIFICATE' : 'cert.pem', # If your site use self-signed
+            #'WEBHOOK_CERTIFICATE' : 'cert.pem', # If your site use self-signed
         	                 #certificate, must be set with location of your public key
         	                 #certificate.(More info at https://core.telegram.org/bots/self-signed )
-
-        	'BOTS' : [
+                             
+            'BOTS' : [
                 {
                    'TOKEN': '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11', #Your bot token.
 
