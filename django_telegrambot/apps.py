@@ -8,6 +8,7 @@ import telegram
 from django.utils.module_loading import module_has_submodule
 from telegram.ext import Dispatcher
 from telegram.ext import Updater
+from telegram.error import InvalidToken
 import os.path
 
 import logging
@@ -164,7 +165,11 @@ class DjangoTelegramBot(AppConfig):
             timeout = b.get('TIMEOUT', None)
 
             if self.mode == WEBHOOK_MODE:
-                bot = telegram.Bot(token=token)
+                try:
+                    bot = telegram.Bot(token=token)
+                except InvalidToken
+                    logger.error('Invalid Token : {}'.format(token))
+                    return 
                 DjangoTelegramBot.dispatchers.append(Dispatcher(bot, None, workers=0))
                 hookurl = '{}/{}/{}/'.format(webhook_site, webhook_base, token)
 
@@ -177,12 +182,17 @@ class DjangoTelegramBot(AppConfig):
                 bot.more_info = webhook_info
                 logger.info('Telegram Bot <{}> setting webhook [ {} ] max connections:{} allowed updates:{} pending updates:{} : {}'.format(bot.username, webhook_info.url, webhook_info.max_connections, real_allowed, webhook_info.pending_update_count, setted))
             else:
-                updater = Updater(token=token)
-                bot = updater.bot
-                bot.delete_webhook()
-                DjangoTelegramBot.updaters.append(updater)
-                DjangoTelegramBot.dispatchers.append(updater.dispatcher)
-                DjangoTelegramBot.__used_tokens.add(token)
+                try:
+                    updater = Updater(token=token)
+                    bot = updater.bot
+                    bot.delete_webhook()
+                    DjangoTelegramBot.updaters.append(updater)
+                    DjangoTelegramBot.dispatchers.append(updater.dispatcher)
+                    DjangoTelegramBot.__used_tokens.add(token)
+                except InvalidToken
+                    logger.error('Invalid Token : {}'.format(token))
+                    return
+
 
             DjangoTelegramBot.bots.append(bot)
             DjangoTelegramBot.bot_tokens.append(token)
