@@ -21,6 +21,20 @@ try:
         ],
         SITE_ID=1,
         MIDDLEWARE_CLASSES=(),
+        DJANGO_TELEGRAMBOT = {
+            'MODE' : 'WEBHOOK', #(Optional [str]) # The default value is WEBHOOK,
+                                # otherwise you may use 'POLLING'
+                                # NB: if use polling you must provide to run
+                                # a management command that starts a worker
+            'WEBHOOK_SITE' : 'https://mywebsite.com',
+        	'WEBHOOK_PREFIX' : '/prefix', # (Optional[str]) # If this value is specified,
+                                          # a prefix is added to webhook url
+        	'BOTS' : [
+                {
+                   'TOKEN': '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11', #Your bot token.
+                },
+            ],
+        },
     )
 
     try:
