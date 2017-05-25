@@ -8,7 +8,7 @@ import telegram
 from django.utils.module_loading import module_has_submodule
 from telegram.ext import Dispatcher
 from telegram.ext import Updater
-from telegram.error import InvalidToken
+from telegram.error import InvalidToken, TelegramError
 import os.path
 
 import logging
@@ -167,20 +167,25 @@ class DjangoTelegramBot(AppConfig):
             if self.mode == WEBHOOK_MODE:
                 try:
                     bot = telegram.Bot(token=token)
+                    DjangoTelegramBot.dispatchers.append(Dispatcher(bot, None, workers=0))
+                    hookurl = '{}/{}/{}/'.format(webhook_site, webhook_base, token)
+
+                    max_connections = b.get('WEBHOOK_MAX_CONNECTIONS', 40)
+
+                    setted = bot.setWebhook(hookurl, certificate=certificate, timeout=timeout, max_connections=max_connections, allowed_updates=allowed_updates)
+                    webhook_info = bot.getWebhookInfo()
+                    real_allowed = webhook_info.allowed_updates if webhook_info.allowed_updates else ["ALL"]
+
+                    bot.more_info = webhook_info
+                    logger.info('Telegram Bot <{}> setting webhook [ {} ] max connections:{} allowed updates:{} pending updates:{} : {}'.format(bot.username, webhook_info.url, webhook_info.max_connections, real_allowed, webhook_info.pending_update_count, setted))
+                    
                 except InvalidToken:
                     logger.error('Invalid Token : {}'.format(token))
-                    return 
-                DjangoTelegramBot.dispatchers.append(Dispatcher(bot, None, workers=0))
-                hookurl = '{}/{}/{}/'.format(webhook_site, webhook_base, token)
+                    return
+                except TelegramError as er:
+                    logger.error('Error : {}'.format(repr(er)))
+                    return
 
-                max_connections = b.get('WEBHOOK_MAX_CONNECTIONS', 40)
-
-                setted = bot.setWebhook(hookurl, certificate=certificate, timeout=timeout, max_connections=max_connections, allowed_updates=allowed_updates)
-                webhook_info = bot.getWebhookInfo()
-                real_allowed = webhook_info.allowed_updates if webhook_info.allowed_updates else ["ALL"]
-
-                bot.more_info = webhook_info
-                logger.info('Telegram Bot <{}> setting webhook [ {} ] max connections:{} allowed updates:{} pending updates:{} : {}'.format(bot.username, webhook_info.url, webhook_info.max_connections, real_allowed, webhook_info.pending_update_count, setted))
             else:
                 try:
                     updater = Updater(token=token)
@@ -192,7 +197,9 @@ class DjangoTelegramBot(AppConfig):
                 except InvalidToken:
                     logger.error('Invalid Token : {}'.format(token))
                     return
-
+                except TelegramError as er:
+                    logger.error('Error : {}'.format(repr(er)))
+                    return
 
             DjangoTelegramBot.bots.append(bot)
             DjangoTelegramBot.bot_tokens.append(token)
