@@ -7,6 +7,7 @@ django-telegrambot
 
 .. image:: https://travis-ci.org/JungDev/django-telegrambot.png?branch=master
     :target: https://travis-ci.org/JungDev/django-telegrambot
+    
 
 A simple app to develop Telegram bots with Django
 
@@ -14,6 +15,11 @@ Documentation
 -------------
 
 The full documentation is at https://django-telegrambot.readthedocs.org.
+
+Changelog
+------------
+* **IMPORTANT ver 1.0.0** : If you upgrade from a previous version, you **MUST** change how to include ``django_telegrambot.urls`` and modify your ``settings.py``.
+
 
 Quickstart
 ----------
@@ -58,7 +64,7 @@ And set your bots::
                 {
                    'TOKEN': '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11', #Your bot token.
 
-        		   #'ALLOWED_UPDATES':(Optional[list[str]]), # List the types of
+                   #'ALLOWED_UPDATES':(Optional[list[str]]), # List the types of
         						   #updates you want your bot to receive. For example, specify
         						   #``["message", "edited_channel_post", "callback_query"]`` to
         						   #only receive updates of these types. See ``telegram.Update``
@@ -69,28 +75,28 @@ And set your bots::
         						   #before the call to the setWebhook, so unwanted updates may be
         						   #received for a short period of time.
 
-        		   #'TIMEOUT':(Optional[int|float]), # If this value is specified,
+                   #'TIMEOUT':(Optional[int|float]), # If this value is specified,
         		                   #use it as the read timeout from the server
 
-        		   #'WEBHOOK_MAX_CONNECTIONS':(Optional[int]), # Maximum allowed number of
+                   #'WEBHOOK_MAX_CONNECTIONS':(Optional[int]), # Maximum allowed number of
         		                   #simultaneous HTTPS connections to the webhook for update
         		                   #delivery, 1-100. Defaults to 40. Use lower values to limit the
         		                   #load on your bot's server, and higher values to increase your
         		                   #bot's throughput.
 
-        		   #'POLL_INTERVAL' : (Optional[float]), # Time to wait between polling updates from Telegram in
+                   #'POLL_INTERVAL' : (Optional[float]), # Time to wait between polling updates from Telegram in
                                    #seconds. Default is 0.0
 
-        		   #'POLL_CLEAN':(Optional[bool]), # Whether to clean any pending updates on Telegram servers before
+                   #'POLL_CLEAN':(Optional[bool]), # Whether to clean any pending updates on Telegram servers before
         		                   #actually starting to poll. Default is False.
 
-        		   #'POLL_BOOTSTRAP_RETRIES':(Optional[int]), # Whether the bootstrapping phase of the `Updater`
+                   #'POLL_BOOTSTRAP_RETRIES':(Optional[int]), # Whether the bootstrapping phase of the `Updater`
         		                   #will retry on failures on the Telegram server.
         		                   #|   < 0 - retry indefinitely
         		                   #|     0 - no retries (default)
         		                   #|   > 0 - retry up to X times
 
-        		   #'POLL_READ_LATENCY':(Optional[float|int]), # Grace time in seconds for receiving the reply from
+                   #'POLL_READ_LATENCY':(Optional[float|int]), # Grace time in seconds for receiving the reply from
         		                   #server. Will be added to the `timeout` value and used as the read timeout from
                                    #server (Default: 2).
                 },
@@ -167,6 +173,8 @@ Features
 --------
 
 * Multiple bots
+* Admin dashboard available at ``/admin/django-telegrambot``
+* Polling mode by management command (an easy to way to run bot in local machine, not recommended in production!)
 
 Contributing
 ------------
@@ -202,15 +210,24 @@ There a sample application in `sampleproject` directory. Here is installation in
 4. Run server
 
         python manage.py runserver
-5. To test webhook locally install `ngrok` application and run command
+5. If **WEBHOOK** Mode setted go to 8
+
+6. If **POLLING** Mode setted, open in your browser http://localhost/ 
+
+7. Open Django-Telegram Dashboard http://localhost/admin/django-telegrambot and follow instruction to run worker by management command `botpolling`. Then go to 10
+
+8. To test webhook locally install `ngrok` application and run command
 
         ./ngrok http 8000
-6. Change `WEBHOOK_SITE` and `ALLOWED_HOSTS` in local_settings.py file
+9. Change `WEBHOOK_SITE` and `ALLOWED_HOSTS` in local_settings.py file
+
+10. Start a chat with your bot using telegram.me link avaible in **Django-Telegram Dashboard** at http://localhost/admin/django-telegrambot
 
 Credits
 ---------
 Required package:
-* `Python Telegram Bot`_
+
+*  `Python Telegram Bot`_
 
 .. _`Python Telegram Bot`: https://github.com/python-telegram-bot/python-telegram-bot
 
