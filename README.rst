@@ -7,7 +7,7 @@ django-telegrambot
 
 .. image:: https://travis-ci.org/JungDev/django-telegrambot.png?branch=master
     :target: https://travis-ci.org/JungDev/django-telegrambot
-    
+
 
 A simple app to develop Telegram bots with Django
 
@@ -59,7 +59,7 @@ And set your bots::
             #'WEBHOOK_CERTIFICATE' : 'cert.pem', # If your site use self-signed
         	                 #certificate, must be set with location of your public key
         	                 #certificate.(More info at https://core.telegram.org/bots/self-signed )
-                             
+
             'BOTS' : [
                 {
                    'TOKEN': '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11', #Your bot token.
@@ -164,9 +164,6 @@ Then use it in a project creating a module ``telegrambot.py`` in your app ::
             # log all errors
             dp.add_error_handler(error)
 
-            # log all errors
-            dp.addErrorHandler(error)
-
 
 
 Features
@@ -175,6 +172,8 @@ Features
 * Multiple bots
 * Admin dashboard available at ``/admin/django-telegrambot``
 * Polling mode by management command (an easy to way to run bot in local machine, not recommended in production!)
+
+      ``(myenv) $ python manage.py botpolling --username=<username_bot>``
 
 Contributing
 ------------
@@ -212,7 +211,7 @@ There a sample application in `sampleproject` directory. Here is installation in
         python manage.py runserver
 5. If **WEBHOOK** Mode setted go to 8
 
-6. If **POLLING** Mode setted, open in your browser http://localhost/ 
+6. If **POLLING** Mode setted, open in your browser http://localhost/
 
 7. Open Django-Telegram Dashboard http://localhost/admin/django-telegrambot and follow instruction to run worker by management command `botpolling`. Then go to 10
 

@@ -48,7 +48,3 @@ To use django-telegrambot in a app, create a telegrambot.py module in your app a
 
         # log all errors
         dp.add_error_handler(error)
-
-        # log all errors
-        dp.addErrorHandler(error)
-
