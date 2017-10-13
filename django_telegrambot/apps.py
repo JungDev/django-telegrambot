@@ -123,7 +123,7 @@ class DjangoTelegramBot(AppConfig):
     def ready(self):
         if DjangoTelegramBot.ready_run:
             return
-        DjangoTelegramBot.ready_run = True
+        #DjangoTelegramBot.ready_run = True
 
         self.mode = WEBHOOK_MODE
         if settings.DJANGO_TELEGRAMBOT.get('MODE', 'WEBHOOK') == 'POLLING':
