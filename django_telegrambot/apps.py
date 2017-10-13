@@ -123,7 +123,7 @@ class DjangoTelegramBot(AppConfig):
     def ready(self):
         if DjangoTelegramBot.ready_run:
             return
-        #DjangoTelegramBot.ready_run = True
+        DjangoTelegramBot.ready_run = True
 
         self.mode = WEBHOOK_MODE
         if settings.DJANGO_TELEGRAMBOT.get('MODE', 'WEBHOOK') == 'POLLING':
@@ -171,8 +171,8 @@ class DjangoTelegramBot(AppConfig):
                     hookurl = '{}/{}/{}/'.format(webhook_site, webhook_base, token)
 
                     max_connections = b.get('WEBHOOK_MAX_CONNECTIONS', 40)
-
-                    setted = bot.setWebhook(hookurl, certificate=certificate, timeout=timeout, max_connections=max_connections, allowed_updates=allowed_updates)
+                    if bot.getWebhookInfo().url != hookurl:
+                        setted = bot.setWebhook(hookurl, certificate=certificate, timeout=timeout, max_connections=max_connections, allowed_updates=allowed_updates)
                     webhook_info = bot.getWebhookInfo()
                     real_allowed = webhook_info.allowed_updates if webhook_info.allowed_updates else ["ALL"]
 
