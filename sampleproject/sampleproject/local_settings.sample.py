@@ -1,4 +1,5 @@
 #settings.py
+from .settings import *
 DJANGO_TELEGRAMBOT = {
 
     'MODE' : 'WEBHOOK', #(Optional [str]) # The default value is WEBHOOK,
