@@ -178,7 +178,7 @@ class DjangoTelegramBot(AppConfig):
 
                     bot.more_info = webhook_info
                     logger.info('Telegram Bot <{}> setting webhook [ {} ] max connections:{} allowed updates:{} pending updates:{} : {}'.format(bot.username, webhook_info.url, webhook_info.max_connections, real_allowed, webhook_info.pending_update_count, setted))
-                    
+
                 except InvalidToken:
                     logger.error('Invalid Token : {}'.format(token))
                     return
@@ -208,7 +208,7 @@ class DjangoTelegramBot(AppConfig):
 
         logger.debug('Telegram Bot <{}> set as default bot'.format(DjangoTelegramBot.bots[0].username))
 
-        def module_exists(module_name, method_name, execute):
+        def module_imported(module_name, method_name, execute):
             try:
                 m = importlib.import_module(module_name)
                 if execute and hasattr(m, method_name):
@@ -218,8 +218,11 @@ class DjangoTelegramBot(AppConfig):
                     logger.debug('Run {}'.format(module_name))
 
             except ImportError as er:
-                logger.debug('{} : {}'.format(module_name, repr(er)))
-                return False
+                if settings.DJANGO_TELEGRAMBOT.get('STRICT_INIT'):
+                    raise er
+                else:
+                    logger.error('{} : {}'.format(module_name, repr(er)))
+                    return False
 
             return True
 
@@ -227,7 +230,7 @@ class DjangoTelegramBot(AppConfig):
         for app_config in apps.get_app_configs():
             if module_has_submodule(app_config.module, TELEGRAM_BOT_MODULE_NAME):
                 module_name = '%s.%s' % (app_config.name, TELEGRAM_BOT_MODULE_NAME)
-                if module_exists(module_name, 'main', True):
+                if module_imported(module_name, 'main', True):
                     logger.info('Loaded {}'.format(module_name))
 
         num_bots=len(DjangoTelegramBot.__used_tokens)

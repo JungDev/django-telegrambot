@@ -68,6 +68,10 @@ And set your bots::
         	                 #certificate, must be set with location of your public key
         	                 #certificate.(More info at https://core.telegram.org/bots/self-signed )
 
+            'STRICT_INIT': True, # If set to True, the server will fail to start if some of the
+                                 # apps contain telegrambot.py files that cannot be successfully
+                                 # imported.
+
             'BOTS' : [
                 {
                    'TOKEN': '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11', #Your bot token.
