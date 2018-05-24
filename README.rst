@@ -10,6 +10,9 @@ django-telegrambot
 
 .. image:: https://img.shields.io/badge/Donate-PayPal-green.svg
     :target: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LMXQVQ3YA2JJQ
+    
+.. image:: http://pepy.tech/badge/django-telegrambot
+    :target: http://pepy.tech/count/django-telegrambot
 
 A simple app to develop Telegram bots with Django
 
