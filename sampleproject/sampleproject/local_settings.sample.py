@@ -53,6 +53,17 @@ DJANGO_TELEGRAMBOT = {
 		   #'POLL_READ_LATENCY':(Optional[float|int]), # Grace time in seconds for receiving the reply from
 		                   #server. Will be added to the `timeout` value and used as the read timeout from
                            #server (Default: 2).
+
+		   #'PROXY':(Optional[dict]), # Use proxy to communicate with Telegram API server. Example:
+                           #    {
+                           #        'proxy_url': 'socks5://ip:port',
+                           #        'urllib3_proxy_kwargs': {
+                           #             'username': 'username',
+                           #             'password': 'password'
+                           #        }
+                           #    }
+                           #Default is not to use any proxy.
+
         },
         #Other bots here with same structure.
     ],
