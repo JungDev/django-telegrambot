@@ -98,6 +98,14 @@ And set your bots::
         		                   #delivery, 1-100. Defaults to 40. Use lower values to limit the
         		                   #load on your bot's server, and higher values to increase your
         		                   #bot's throughput.
+                    
+                   # 'MESSAGEQUEUE_ENABLED':(Optinal[bool]), # Make this True if you want to use messagequeue
+
+                   # 'MESSAGEQUEUE_ALL_BURST_LIMIT':(Optional[int]), # If not provided 29 is the default value
+
+                   # 'MESSAGEQUEUE_ALL_TIME_LIMIT_MS':(Optional[int]), # If not provided 1024 is the default value
+
+                   # 'MESSAGEQUEUE_REQUEST_CON_POOL_SIZE':(Optional[int]), # If not provided 8 is the default value
 
                    #'POLL_INTERVAL' : (Optional[float]), # Time to wait between polling updates from Telegram in
                                    #seconds. Default is 0.0
@@ -189,6 +197,7 @@ Features
 * Polling mode by management command (an easy to way to run bot in local machine, not recommended in production!)
 
       ``(myenv) $ python manage.py botpolling --username=<username_bot>``
+* Supporting messagequeues
 
 Contributing
 ------------
