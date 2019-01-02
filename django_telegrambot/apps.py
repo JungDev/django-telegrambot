@@ -168,7 +168,6 @@ class DjangoTelegramBot(AppConfig):
 			allowed_updates = b.get('ALLOWED_UPDATES', None)
 			timeout = b.get('TIMEOUT', None)
             proxy = b.get('PROXY', None)
-            
             if self.mode == WEBHOOK_MODE:
 				try:              
 					if b.get('MESSAGEQUEUE_ENABLED',False):
