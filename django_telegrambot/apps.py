@@ -163,10 +163,9 @@ class DjangoTelegramBot(AppConfig):
 		for b in bots_list:
 			token = b.get('TOKEN', None)
 			if not token:
-				break
-
-			allowed_updates = b.get('ALLOWED_UPDATES', None)
-			timeout = b.get('TIMEOUT', None)
+                break
+            allowed_updates = b.get('ALLOWED_UPDATES', None)
+            timeout = b.get('TIMEOUT', None)
             proxy = b.get('PROXY', None)
             
             if self.mode == WEBHOOK_MODE:
