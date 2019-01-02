@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 @staff_member_required
 def home(request):
     bot_list = DjangoTelegramBot.bots
-    context = {'bot_list': bot_list, 'update_mode':settings.DJANGO_TELEGRAMBOT.get('MODE', 'WEBHOOK')}
+    context = {'bot_list': bot_list, 'update_mode': settings.DJANGO_TELEGRAMBOT.get('MODE', 'WEBHOOK')}
     return render(request, 'django_telegrambot/index.html', context)
 
 
@@ -30,14 +30,14 @@ def webhook (request, bot_token):
     #verifico la validità del token
     bot = DjangoTelegramBot.getBot(bot_id=bot_token, safe=False)
     if bot is None:
-        logger.warn('Request for not found token : {}'.format(bot_token))
+        logger.warning('Request for not found token : {}'.format(bot_token))
         return JsonResponse({})
 
     try:
         data = json.loads(request.body.decode("utf-8"))
 
     except:
-        logger.warn('Telegram bot <{}> receive invalid request : {}'.format(bot.username, repr(request)))
+        logger.warning('Telegram bot <{}> receive invalid request : {}'.format(bot.username, repr(request)))
         return JsonResponse({})
 
     dispatcher = DjangoTelegramBot.getDispatcher(bot_token, safe=False)
@@ -51,7 +51,7 @@ def webhook (request, bot_token):
         logger.debug('Bot <{}> : Processed update {}'.format(bot.username, update))
     # Dispatch any errors
     except TelegramError as te:
-        logger.warn("Bot <{}> : Error was raised while processing Update.".format(bot.username))
+        logger.warning("Bot <{}> : Error was raised while processing Update.".format(bot.username))
         dispatcher.dispatchError(update, te)
 
     # All other errors should not stop the thread, just print them
