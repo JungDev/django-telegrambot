@@ -167,22 +167,22 @@ class DjangoTelegramBot(AppConfig):
 
 			allowed_updates = b.get('ALLOWED_UPDATES', None)
 			timeout = b.get('TIMEOUT', None)
-      proxy = b.get('PROXY', None)
+            proxy = b.get('PROXY', None)
 
 			if self.mode == WEBHOOK_MODE:
 				try:              
 					if b.get('MESSAGEQUEUE_ENABLED',False):
 						q = mq.MessageQueue(all_burst_limit=b.get('MESSAGEQUEUE_ALL_BURST_LIMIT',29),
-								 all_time_limit_ms=b.get('MESSAGEQUEUE_ALL_TIME_LIMIT_MS',1024))
-            if proxy:
-              request = Request(proxy_url=proxy['proxy_url'], urllib3_proxy_kwargs=proxy['urllib3_proxy_kwargs'], con_pool_size=b.get('MESSAGEQUEUE_REQUEST_CON_POOL_SIZE',8))
-            else:
-						  request = Request(con_pool_size=b.get('MESSAGEQUEUE_REQUEST_CON_POOL_SIZE',8))
-						bot = MQBot(token, request=request, mqueue=q)
-					else:
-            request = None
-            if proxy:
-              request = Request(proxy_url=proxy['proxy_url'], urllib3_proxy_kwargs=proxy['urllib3_proxy_kwargs'])
+                        all_time_limit_ms=b.get('MESSAGEQUEUE_ALL_TIME_LIMIT_MS',1024))
+                        if proxy:
+                            request = Request(proxy_url=proxy['proxy_url'], urllib3_proxy_kwargs=proxy['urllib3_proxy_kwargs'], con_pool_size=b.get('MESSAGEQUEUE_REQUEST_CON_POOL_SIZE',8))
+                        else:
+				            request = Request(con_pool_size=b.get('MESSAGEQUEUE_REQUEST_CON_POOL_SIZE',8))
+                        bot = MQBot(token, request=request, mqueue=q)
+				    else:
+                        request = None
+                        if proxy:
+                            request = Request(proxy_url=proxy['proxy_url'], urllib3_proxy_kwargs=proxy['urllib3_proxy_kwargs'])
 						bot = telegram.Bot(token=token, request=request)
 						
 					DjangoTelegramBot.dispatchers.append(Dispatcher(bot, None, workers=0))
