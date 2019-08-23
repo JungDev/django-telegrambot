@@ -169,7 +169,7 @@ class DjangoTelegramBot(AppConfig):
             allowed_updates = b.get('ALLOWED_UPDATES', None)
             timeout = b.get('TIMEOUT', None)
             proxy = b.get('PROXY', None)
-            workers = 4
+            workers = b.get('ASYNC_WORKERS', 4)
 
             if self.mode == WEBHOOK_MODE:
                 try:              

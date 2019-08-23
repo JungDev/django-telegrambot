@@ -122,6 +122,9 @@ And set your bots::
                    #'POLL_READ_LATENCY':(Optional[float|int]), # Grace time in seconds for receiving the reply from
         		                   #server. Will be added to the `timeout` value and used as the read timeout from
                                    #server (Default: 2).
+
+                   #'ASYNC_WORKERS':(Optional[int]), # Amount of threads in the thread pool for functions
+                                   #decorated with ``@run_async``.(Default: 4).
                 },
                 #Other bots here with same structure.
             ],
