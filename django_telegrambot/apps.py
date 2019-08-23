@@ -170,7 +170,7 @@ class DjangoTelegramBot(AppConfig):
             proxy = b.get('PROXY', None)
             
             if self.mode == WEBHOOK_MODE:
-                try:              
+                try:
                     if b.get('MESSAGEQUEUE_ENABLED',False):
                         q = mq.MessageQueue(all_burst_limit=b.get('MESSAGEQUEUE_ALL_BURST_LIMIT',29),
                         all_time_limit_ms=b.get('MESSAGEQUEUE_ALL_TIME_LIMIT_MS',1024))
@@ -178,7 +178,7 @@ class DjangoTelegramBot(AppConfig):
                             request = Request(proxy_url=proxy['proxy_url'], urllib3_proxy_kwargs=proxy['urllib3_proxy_kwargs'], con_pool_size=b.get('MESSAGEQUEUE_REQUEST_CON_POOL_SIZE',8))
                         else:
                             request = Request(con_pool_size=b.get('MESSAGEQUEUE_REQUEST_CON_POOL_SIZE',8))
-                        bot = MQBot(token, request=request, mqueue=q)
+                        bot = MQBot(q, token=token, request=request)
                     else:
                         request = None
                         if proxy:

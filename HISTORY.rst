@@ -2,6 +2,10 @@
 
 History
 -------
+1.1.0 (unreleased)
+++++++++++++++++++
+* Fix error on startup when using ``MESSAGEQUEUE_ENABLED`` [Nachatlb]
+
 1.0.0 (2017-05-25)
 ++++++++++++++++++
 * IMPORTANT: If you upgrade from a previous version, you MUST change how to include django_telegrambot.urls and settings.py.
