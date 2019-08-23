@@ -26,7 +26,7 @@ try:
                                 # otherwise you may use 'POLLING'
                                 # NB: if use polling you must provide to run
                                 # a management command that starts a worker
-        	'BOTS' : [
+            'BOTS' : [
                 {
                    'TOKEN': '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11', #Your bot token.
                 },
