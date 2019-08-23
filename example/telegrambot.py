@@ -23,17 +23,17 @@ def echo(bot, update):
 
 def error(bot, update, error):
     logger.warn('Update "%s" caused error "%s"' % (update, error))
-    
+
 
 def main():
     logger.info("Loading handlers for telegram bot")
-    
+
     # Default dispatcher (this is related to the first bot in settings.TELEGRAM_BOT_TOKENS)
     dp = DjangoTelegramBot.dispatcher
     # To get Dispatcher related to a specific bot
     # dp = DjangoTelegramBot.getDispatcher('BOT_n_token')     #get by bot token
     # dp = DjangoTelegramBot.getDispatcher('BOT_n_username')  #get by bot username
-    
+
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))

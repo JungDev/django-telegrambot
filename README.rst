@@ -10,7 +10,7 @@ django-telegrambot
 
 .. image:: https://img.shields.io/badge/Donate-PayPal-green.svg
     :target: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LMXQVQ3YA2JJQ
-    
+
 .. image:: http://pepy.tech/badge/django-telegrambot
     :target: http://pepy.tech/count/django-telegrambot
 
@@ -98,7 +98,7 @@ And set your bots::
         		                   #delivery, 1-100. Defaults to 40. Use lower values to limit the
         		                   #load on your bot's server, and higher values to increase your
         		                   #bot's throughput.
-                    
+
                    # 'MESSAGEQUEUE_ENABLED':(Optinal[bool]), # Make this True if you want to use messagequeue
 
                    # 'MESSAGEQUEUE_ALL_BURST_LIMIT':(Optional[int]), # If not provided 29 is the default value
