@@ -2,6 +2,10 @@
 
 History
 -------
+1.1.0 (unreleased)
+++++++++++++++++++
+* Run functions decorated with ``@run_async`` in webhook mode [Nachtalb]
+
 1.0.0 (2017-05-25)
 ++++++++++++++++++
 * IMPORTANT: If you upgrade from a previous version, you MUST change how to include django_telegrambot.urls and settings.py.
