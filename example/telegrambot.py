@@ -4,6 +4,7 @@ from telegram.ext import CommandHandler, MessageHandler, Filters
 from django_telegrambot.apps import DjangoTelegramBot
 
 import logging
+
 logger = logging.getLogger(__name__)
 
 
@@ -46,4 +47,3 @@ def main():
 
     # log all errors
     dp.addErrorHandler(error)
-

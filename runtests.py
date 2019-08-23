@@ -21,14 +21,14 @@ try:
         ],
         SITE_ID=1,
         MIDDLEWARE_CLASSES=(),
-        DJANGO_TELEGRAMBOT = {
-            'MODE' : 'POLLING', #(Optional [str]) # The default value is WEBHOOK,
-                                # otherwise you may use 'POLLING'
-                                # NB: if use polling you must provide to run
-                                # a management command that starts a worker
-            'BOTS' : [
+        DJANGO_TELEGRAMBOT={
+            'MODE': 'POLLING',  # (Optional [str]) # The default value is WEBHOOK,
+            # otherwise you may use 'POLLING'
+            # NB: if use polling you must provide to run
+            # a management command that starts a worker
+            'BOTS': [
                 {
-                   'TOKEN': '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11', #Your bot token.
+                    'TOKEN': '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',  # Your bot token.
                 },
             ],
         },
@@ -36,6 +36,7 @@ try:
 
     try:
         import django
+
         setup = django.setup
     except AttributeError:
         pass
@@ -44,6 +45,7 @@ try:
 
 except ImportError:
     import traceback
+
     traceback.print_exc()
     raise ImportError("To fix this error, run: pip install -r requirements-test.txt")
 

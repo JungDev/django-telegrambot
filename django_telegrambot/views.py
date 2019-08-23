@@ -20,14 +20,13 @@ logger = logging.getLogger(__name__)
 @staff_member_required
 def home(request):
     bot_list = DjangoTelegramBot.bots
-    context = {'bot_list': bot_list, 'update_mode':settings.DJANGO_TELEGRAMBOT.get('MODE', 'WEBHOOK')}
+    context = {'bot_list': bot_list, 'update_mode': settings.DJANGO_TELEGRAMBOT.get('MODE', 'WEBHOOK')}
     return render(request, 'django_telegrambot/index.html', context)
 
 
 @csrf_exempt
-def webhook (request, bot_token):
-
-    #verifico la validità del token
+def webhook(request, bot_token):
+    # verifico la validità del token
     bot = DjangoTelegramBot.getBot(bot_id=bot_token, safe=False)
     if bot is None:
         logger.warn('Request for not found token : {}'.format(bot_token))

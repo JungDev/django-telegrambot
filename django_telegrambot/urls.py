@@ -1,9 +1,8 @@
-
 from django.conf.urls import url
 from . import views
 from django.conf import settings
 
-webhook_base = settings.DJANGO_TELEGRAMBOT.get('WEBHOOK_PREFIX','/')
+webhook_base = settings.DJANGO_TELEGRAMBOT.get('WEBHOOK_PREFIX', '/')
 if webhook_base.startswith("/"):
     webhook_base = webhook_base[1:]
 if not webhook_base.endswith("/"):
