@@ -186,7 +186,7 @@ class DjangoTelegramBot(AppConfig):
                             request = Request(proxy_url=proxy['proxy_url'], urllib3_proxy_kwargs=proxy['urllib3_proxy_kwargs'])
                         bot = telegram.Bot(token=token, request=request)
 
-                    DjangoTelegramBot.dispatchers.append(Dispatcher(bot, None, workers=0))
+                    DjangoTelegramBot.dispatchers.append(Dispatcher(bot, None, workers=0, use_context=context))
                     hookurl = '{}/{}/{}/'.format(webhook_site, webhook_base, token)
                     max_connections = b.get('WEBHOOK_MAX_CONNECTIONS', 40)
                     setted = bot.setWebhook(hookurl, certificate=certificate, timeout=timeout, max_connections=max_connections, allowed_updates=allowed_updates)
