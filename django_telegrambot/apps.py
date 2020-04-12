@@ -200,7 +200,7 @@ class DjangoTelegramBot(AppConfig):
                     logger.error('Invalid Token : {}'.format(token))
                     return
                 except TelegramError as er:
-                    logger.error('Error : {}'.format(repr(er)))
+                    logger.error('Error : {}'.format(er.message))
                     return
 
             else:
@@ -215,7 +215,7 @@ class DjangoTelegramBot(AppConfig):
                     logger.error('Invalid Token : {}'.format(token))
                     return
                 except TelegramError as er:
-                    logger.error('Error : {}'.format(repr(er)))
+                    logger.error('Error : {}'.format(er.message))
                     return
 
             DjangoTelegramBot.bots.append(bot)
