@@ -18,7 +18,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-TELEGRAM_BOT_MODULE_NAME = 'telegrambot'
+TELEGRAM_BOT_MODULE_NAME = settings.DJANGO_TELEGRAMBOT.get('BOT_MODULE_NAME', 'telegrambot')
 WEBHOOK_MODE, POLLING_MODE = range(2)
 
 class classproperty(property):

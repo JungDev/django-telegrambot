@@ -75,10 +75,12 @@ And set your bots::
                                  # apps contain telegrambot.py files that cannot be successfully
                                  # imported.
 
+            'BOT_MODULE_NAME': 'telegrambot_handlers', #(Optional [str])  # The default name for file name containing telegram handlers which has to be placed inside your local app(s). Default is 'telegrambot'. Example is to put "telegrambot_handlers.py" file to local app's folder.
+
             'BOTS' : [
                 {
                    'TOKEN': '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11', #Your bot token.
-                   
+
                    #'CONTEXT': True,  # Use context based handler functions
 
                    #'ALLOWED_UPDATES':(Optional[list[str]]), # List the types of
