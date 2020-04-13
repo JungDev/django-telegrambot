@@ -30,19 +30,19 @@ def webhook (request, bot_token):
     #verifico la validità del token
     bot = DjangoTelegramBot.getBot(bot_id=bot_token, safe=False)
     if bot is None:
-        logger.warn('Request for not found token : {}'.format(bot_token))
+        logger.warn('Request for not found token: {}'.format(bot_token))
         return JsonResponse({})
 
     try:
         data = json.loads(request.body.decode("utf-8"))
 
     except:
-        logger.warn('Telegram bot <{}> receive invalid request : {}'.format(bot.username, repr(request)))
+        logger.warn('Telegram bot <{}> receive invalid request: {}'.format(bot.username, repr(request)))
         return JsonResponse({})
 
     dispatcher = DjangoTelegramBot.getDispatcher(bot_token, safe=False)
     if dispatcher is None:
-        logger.error('Dispatcher for bot <{}> not found : {}'.format(bot.username, bot_token))
+        logger.error('Dispatcher for bot <{}> not found: {}'.format(bot.username, bot_token))
         return JsonResponse({})
 
     try:
